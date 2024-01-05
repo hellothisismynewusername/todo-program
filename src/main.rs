@@ -145,8 +145,11 @@ fn main() {
     writefile.expect("failed to name file").write_all(&buf);
 }
 
-fn offset(c : char) -> char {                                     std::char::from_u32(c as u32 + 1).unwrap_or(c)            }
-                                                              fn unoffset(c : char) -> char {
+fn offset(c : char) -> char {
+    std::char::from_u32(c as u32 + 1).unwrap_or(c)
+}
+
+fn unoffset(c : char) -> char {
     std::char::from_u32(c as u32 - 1).unwrap_or(c)
 }
 
