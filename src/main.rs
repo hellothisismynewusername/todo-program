@@ -112,8 +112,11 @@ fn main() {
             items.push(item);
         }
         if action == 4 {
-            let index = input_index();
-            items.remove(index);
+            let mut index = input_index(items.len()).unwrap_or(-1);
+            if index != -1 {
+                items.remove(index as usize);
+            }
+            println!();
         }
     }
     let mut buf : Vec<u8> = Vec::new();
@@ -153,18 +156,22 @@ fn unoffset(c : char) -> char {
     std::char::from_u32(c as u32 - 1).unwrap_or(c)
 }
 
-fn input_index() -> usize {
-    let mut out : usize;
+fn input_index(len : usize) -> Option<i64> {
+    let mut out : i64;
     let mut input = String::new();
     println!("Input index to delete");
     std::io::stdin().read_line(&mut input).unwrap();
     input.truncate(input.len() - 1);
-    if input.parse::<usize>().is_err() {
+    if input.parse::<i64>().is_err() {
         println!("super ug og");
         std::process::exit(2);
     }
     out = input.parse().unwrap();
-    out
+    if out >= len as i64 || out < 0 {
+        None
+    } else {
+        Some(out)
+    }
 }
 
 fn input_item() -> Item {
